@@ -5,5 +5,7 @@ class CreateTags < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    create_join_table :gossips, :tags
   end
 end

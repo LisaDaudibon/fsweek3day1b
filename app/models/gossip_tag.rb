@@ -1,2 +1,0 @@
-class GossipTag < ApplicationRecord
-end
