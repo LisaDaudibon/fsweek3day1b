@@ -10,98 +10,75 @@
 # JoinTableGossipTag.destroy_all
 # ActiveRecord::Base.connection.reset_pk_sequence!('jointablegossiptags')
 
-User.destroy_all
 City.destroy_all
-Gossip.destroy_all
-GossipTag.destroy_all
-PrivateMessage.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('cities')
+User.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('users')
 Tag.destroy_all
-RecipientList.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('tags')
+Gossip.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('gossips')
+PrivateMessage.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('privatemessages')
+Comment.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('comments')
+Like.destroy_all
+ActiveRecord::Base.connection.reset_pk_sequence!('likes')
 
-require 'faker'
-
-nb_user = 10
-nb_city = 10
-nb_gossip = 20
-nb_tags = 10
-nb_messages = 20
-users = []
-cities = []
-gossips = []
-tags = []
-messages = []
-
-
-nb_city.times do |x|
-	city = City.create(
-		name: Faker::Address.city,
-		zip_code: Faker::Address.zip_code)
-	cities << city
- 	puts "Création de la Ville n°#{x}"
+10.times do |_|
+  City.create(name: Faker::Address.city,
+              zip_code: Faker::Address.zip_code)
 end
 
-nb_user.times do |x|
-	user = User.create(
-		first_name: Faker::Name.first_name,
-		last_name: Faker::Name.last_name,
-		description: Faker::Lorem.paragraph,
-		email: Faker::Internet.email,
-		age: rand(13..110),
-		city_id: cities[rand(0..nb_city-1)].id)
-	users << user
- 	puts "Création de l'utilisateur n°#{x}"
+10.times do |_|
+  User.create(first_name: Faker::Name.first_name,
+              last_name: Faker::Name.last_name,
+              age: rand(18..60),
+              description: Faker::Lorem.paragraph) #,
+              #city: City.all.sample)
+  User.last.update(email: Faker::Internet.email(name: [User.last.first_name, User.last.last_name].join('.')))
 end
 
-nb_gossip.times do |x|
-	gossip = Gossip.create(
-			title: Faker::Book.title,
-			content: Faker::Lorem.paragraph,
-			user_id: users[rand(0..nb_user-1)].id)
-	gossips << gossip
- 	puts "Création du potin n°#{x}"
+10.times do |_|
+  Tag.create(title: '#' + Faker::Hobby.activity)
 end
 
-nb_tags.times do |x|
-	tag = Tag.create(
-		title: Faker::Book.genre)
-	tags << tag
- 	puts "Création du tag n°#{x}"
+20.times do |_|
+  Gossip.create(title: Faker::Lorem.sentence,
+                content: Faker::Lorem.paragraph,
+                user: User.all.sample)
+  rand(1..4).times do |_i|
+    Gossip.last.tags << Tag.all.sample
+  end
+  # Gossip.last.tags.uniq!
 end
 
-nb_gossip.times do |x|
-	GossipTag.create(
-			gossip_id: gossips[rand(0..nb_gossip-1)].id,
-			tag_id: tags[rand(0..nb_tags-1)].id)
-	puts "Création d'un tag par gossip n°#{x}"
+5.times do |_|
+  PrivateMessage.create(content: Faker::Lorem.sentence,
+                        sender: User.all.sample)
+  rand(1..3).times do |_i|
+    PrivateMessage.last.recipients << User.all.sample
+  end
 end
 
-40.times do |x|
-	GossipTag.create(
-			gossip_id: gossips[rand(0..nb_gossip-1)].id,
-			tag_id: tags[rand(0..nb_tags-1)].id)
-	puts "Création de tag supplémentaire par gossip n°#{x}"
+20.times do |_|
+  Comment.create(user: User.all.sample,
+                 gossip: Gossip.all.sample,
+                 content: Faker::Lorem.sentence)
 end
 
-nb_messages.times do |x|
-	message = PrivateMessage.create(
-		sender_id: users[rand(0..nb_user-1)].id,
-		content: Faker::Lorem.paragraph)
-	messages << message
-	puts "Création du message privé n°#{x}"
+20.times do |_|
+  Comment.create(user: User.all.sample,
+                 parent_comment: Comment.all.sample,
+                 content: Faker::Lorem.sentence)
 end
 
-nb_messages.times do |x|
-	message = RecipientList.create(
-		private_message_id: messages[x].id,
-		recipient_id: users[rand(0..nb_user-1)].id)
-	messages << message
-	puts "Création du réceptionniste du message privé n°#{x}"
+10.times do |_|
+  Like.create(user: User.all.sample,
+              gossip: Gossip.all.sample)
 end
 
-nb_messages.times do |x|
-	message = RecipientList.create(
-		private_message_id: messages[rand(0..nb_messages-1)].id,
-		recipient_id: users[rand(0..nb_user-1)].id)
-	messages << message
-	puts "Création des messages avec plusieurs réceptionnistes n°#{x}"
+10.times do |_|
+  Like.create(user: User.all.sample,
+              comment: Comment.all.sample)
 end
