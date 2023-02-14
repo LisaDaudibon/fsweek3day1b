@@ -34,9 +34,9 @@ end
   User.create(first_name: Faker::Name.first_name,
               last_name: Faker::Name.last_name,
               age: rand(18..60),
-              description: Faker::Lorem.paragraph) #,
-              #city: City.all.sample)
-  User.last.update(email: Faker::Internet.email(name: [User.last.first_name, User.last.last_name].join('.')))
+              description: Faker::Lorem.paragraph,
+              city: City.all.sample)
+  #User.last.update(email: Faker::Internet.email(name: [User.last.first_name, User.last.last_name].join('.')))
 end
 
 10.times do |_|
@@ -50,7 +50,7 @@ end
   rand(1..4).times do |_i|
     Gossip.last.tags << Tag.all.sample
   end
-  # Gossip.last.tags.uniq!
+  #Gossip.last.tags.uniq!
 end
 
 5.times do |_|

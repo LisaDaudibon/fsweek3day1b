@@ -2,6 +2,7 @@
 
 class GossipController < ApplicationController
   def home
+
   end
 
   def contact
@@ -10,7 +11,11 @@ class GossipController < ApplicationController
   def team
   end
 
-  def méthode
-    @user = User.find(params[:un_nom_de_variable])
+  def welcome
+    @user = User.find(params[:id])
+  end
+  
+  def find
+
   end
 end

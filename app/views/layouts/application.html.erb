@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Fsweek3day1b</title>
+    <title>The Gossip Project</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,18 +11,32 @@
   </head>
 
   <body>
-  <div class="container">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"> </a>
 
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="gossip/home" class="nav-link active" aria-current="page">Home</a></li>
-        <li class="nav-item"><a href="/gossip/team" class="nav-link">Team</a></li>
-        <li class="nav-item"><a href="/gossip/contact" class="nav-link">Contact</a></li>
+  <nav class="navbar navbar-expand navbar-dark bg-dark" aria-label="Second navbar example">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">The Gossip project</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-      </ul>
-    </header>
-  </div>
+      <div class="collapse navbar-collapse" id="navbarsExample02">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/gossip/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/gossip/team">Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/gossip/contact">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/gossip/welcome/:id">Welcome </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
     
     <%= yield %>
   </body>

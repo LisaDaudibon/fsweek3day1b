@@ -7,5 +7,8 @@ Rails.application.routes.draw do
 
   get '/gossip/contact', to: 'gossip#contact'
   get '/gossip/team', to: 'gossip#team'
+  get '/gossip/welcome/:id', to:'gossip/welcome#find'
+
+  # ressources :gossip
 
 end
