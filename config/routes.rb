@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
+  # get 'team/show'
   # Defines the root path route ("/")
-  root "gossip#home"
+  root "gossip#index"
 
-  get '/gossip/home', to: 'gossip#home'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :gossip
+  resources :contact, only: [:index]
+  resources :team, only: [:index]
 
-  get '/gossip/contact', to: 'gossip#contact'
-  get '/gossip/team', to: 'gossip#team'
-  get '/gossip/welcome/:id', to:'gossip/welcome#find'
+  # get '/gossip/home', to: 'gossip#home'
+  # # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # ressources :gossip
+  # get '/gossip/contact', to: 'gossip#contact'
+  # get '/gossip/team', to: 'gossip#team'
+  # get '/gossip/welcome/:id', to:'gossip#welcome'
 
 end
